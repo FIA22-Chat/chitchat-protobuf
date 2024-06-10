@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package chitchat.service;
+option java_package = "io.github.chitchat.service";
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+
+service MessageService {
+    rpc GetMessage (GetMessageRequest) returns (Message) {}
+    rpc ListMessages (ListMessagesRequest) returns (stream Message) {}
+    rpc SendMessage (SendMessageRequest) returns (Message) {}
+    rpc DeleteMessage (DeleteMessageRequest) returns (google.protobuf.Empty) {}
+}
+
+enum MessageType {
+    TEXT = 0;
+    MEDIA = 1;
+}
+
+message Message {
+    int32 user_id = 1;
+    int32 group_id = 2;
+    MessageType type = 3;
+    string content = 4;
+    int32 modified_at = 5;
+}
+
+message GetMessageRequest {
+    int32 message_id = 1;
+}
+
+message ListMessagesRequest {
+    optional int32 user_id = 1;
+    optional int32 group_id = 2;
+    optional int32 offset_id = 3;
+    optional int32 limit = 4;
+}
+
+message SendMessageRequest {
+    int32 user_id = 1;
+    int32 group_id = 2;
+    MessageType type = 3;
+    string content = 4;
+}
+
+message DeleteMessageRequest {
+    int32 message_id = 1;
+}
