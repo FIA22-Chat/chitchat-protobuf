@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package chitchat.service;
+option java_package = "io.github.chitchat.service";
+option java_multiple_files = true;
+
+import "google/protobuf/empty.proto";
+
+service RoleService {
+  rpc GetRole (GetRoleRequest) returns (Role) {}
+  rpc ListRoles (ListRolesRequest) returns (ListRolesResponse) {}
+  rpc CreateRole (CreateRoleRequest) returns (Role) {}
+  rpc DeleteRole (DeleteRoleRequest) returns (google.protobuf.Empty) {}
+}
+
+message Role {
+  string user_id = 1;
+  string group_id = 2;
+  string name = 3;
+
+  int64 modified_at = 5;
+}
+
+message GetRoleRequest {
+  string user_id = 1;
+  string group_id = 2;
+}
+
+message ListRolesRequest {
+  string group_id = 1;
+}
+
+message ListRolesResponse {
+  Role roles = 1;
+}
+
+message CreateRoleRequest {
+  string user_id = 1;
+  string group_id = 2;
+  string name = 3;
+}
+
+message DeleteRoleRequest {
+  string user_id = 1;
+  string group_id = 2;
+}
